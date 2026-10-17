@@ -25,7 +25,12 @@ async def ask_llm(prompt: str, system: str | None = None) -> str:
         "Authorization": f"Bearer {config.OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
     }
-    payload = {"model": config.OPENROUTER_MODEL, "messages": messages}
+    # payload = {"model": config.OPENROUTER_MODEL, "messages": messages}
+    payload = {
+    "model": config.OPENROUTER_MODEL,
+    "messages": messages,
+    "max_tokens": config.LLM_MAX_TOKENS,
+}
 
     try:
         async with httpx.AsyncClient(timeout=config.LLM_TIMEOUT_SECONDS) as client:

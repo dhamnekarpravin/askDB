@@ -1,0 +1,42 @@
+[
+  {
+    "question": "How many customers are there?",
+    "reference_sql": "SELECT COUNT(*) FROM customers"
+  },
+  {
+    "question": "How many orders are pending?",
+    "reference_sql": "SELECT COUNT(*) FROM orders WHERE status = 'PENDING'"
+  },
+  {
+    "question": "Which customers live in Chennai?",
+    "reference_sql": "SELECT name FROM customers WHERE city = 'Chennai'"
+  },
+  {
+    "question": "What is the total revenue?",
+    "reference_sql": "SELECT SUM(oi.quantity * oi.unit_price) FROM order_items oi JOIN orders o ON o.id = oi.order_id WHERE o.status = 'PAID'"
+  },
+  {
+    "question": "Top 3 customers by total revenue",
+    "reference_sql": "SELECT c.name, SUM(oi.quantity * oi.unit_price) AS total FROM customers c JOIN orders o ON o.customer_id = c.id JOIN order_items oi ON oi.order_id = o.id WHERE o.status = 'PAID' GROUP BY c.name ORDER BY total DESC LIMIT 3"
+  },
+  {
+    "question": "Total revenue per product category",
+    "reference_sql": "SELECT p.category, SUM(oi.quantity * oi.unit_price) AS total FROM products p JOIN order_items oi ON oi.product_id = p.id JOIN orders o ON o.id = oi.order_id WHERE o.status = 'PAID' GROUP BY p.category"
+  },
+  {
+    "question": "How many cancelled orders are there?",
+    "reference_sql": "SELECT COUNT(*) FROM orders WHERE status = 'CANCELLED'"
+  },
+  {
+    "question": "What is the most expensive product?",
+    "reference_sql": "SELECT name FROM products ORDER BY price DESC LIMIT 1"
+  },
+  {
+    "question": "List the names of products in the Furniture category",
+    "reference_sql": "SELECT name FROM products WHERE category = 'Furniture'"
+  },
+  {
+    "question": "How many customers have placed at least one paid order?",
+    "reference_sql": "SELECT COUNT(DISTINCT customer_id) FROM orders WHERE status = 'PAID'"
+  }
+]
